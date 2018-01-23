@@ -1,0 +1,10 @@
+#notebooks {
+	background: #e8e8e8;
+	width: 20%;
+}
+.filter {
+	font-size: 0.8em;
+	margin-right: 25px;
+	float: right;
+	cursor: pointer;
+}
