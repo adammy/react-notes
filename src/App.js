@@ -50,21 +50,18 @@ class App extends Component {
 		}
 	}
 
-  render() {
+	render() {
 
-		let { user, notebooks } = this.state;
+		const { user, notebooks } = this.state;
 
-		// sort elements by name prop
-		notebooks = notebooks.sort((a, b) => (a.name < b.name) ? -1 : 1);
-
-    return (
+		return (
 			<div className="app">
 				<Nav name={user.name.first} />
 				<Dashboard notebooks={notebooks} />
 			</div>
-    );
+		);
 
-  }
+	}
 
 }
 
