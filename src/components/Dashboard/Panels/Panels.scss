@@ -1,0 +1,93 @@
+@import 'styles/colors';
+
+.panel {
+	padding: 1.25em 0 3.5em;
+	height: 100%;
+	overflow: auto;
+	float: left;
+	position: relative;
+	box-sizing: border-box;
+	&:last-child {
+		border: none;
+	}
+	h2 {
+		padding: 0 25px 1em;
+		margin: 0;
+	}
+}
+.selections {
+	.item {
+		padding: 0.5em 25px;
+		cursor: pointer;
+		.title {
+			color: $primary;
+			font-weight: 700;
+		}
+		.delete {
+			display: none;
+			margin: 0.25em 0 0;
+			float: right;
+		}
+		.updated {
+			color: $gray;
+			font-size: 0.75em;
+			line-height: 1.4em;
+			font-weight: 700;
+		}
+		.preview {
+			color: $gray;
+			font-size: 0.75em;
+			line-height: 1.25em;
+			margin: 0.5em 0;
+		}
+		&.active {
+			background: $primary;
+			.title, .updated, .preview {
+				color: #fff;
+			}
+		}
+		&:hover {
+			background: lighten($primary, 7%);
+			.title, .updated, .preview {
+				color: #fff;
+			}
+			.delete {
+				color: lighten($primary, 30%);
+				display: inline-block;
+				transition: 0.1s all ease-in-out;
+				&:hover {
+					color: #fff;
+				}
+			}
+		}
+		&.note {
+			&.active {
+				background: lighten($primary, 5%);
+			}
+			&:hover {
+				background: lighten($primary, 12%);
+			}
+		}
+	}
+}
+.addition {
+	color: $gray;
+	font-size: 0.8em;
+	padding: 0.5em 25px;
+	margin: 1.5em 0 0;
+	box-sizing: border-box;
+	cursor: pointer;
+	.fa {
+		margin-right: 0.5em;
+	}
+	&:hover {
+		color: darken($gray, 20%);
+	}
+}
+
+.filter {
+	font-size: 0.8em;
+	margin-right: 25px;
+	float: right;
+	cursor: pointer;
+}
