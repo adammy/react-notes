@@ -5,7 +5,7 @@ import Notes from './Notes/Notes';
 import NoteEditor from './NoteEditor/NoteEditor';
 import './Panels/Panels.css';
 
-const Dashboard = ({ notebooks = [] }) => {
+const Dashboard = ({ notebooks = [], onNotebookChange = (f => f) }) => {
 
 	const notebooksArr = notebooks.map(notebook => {
 		return {
@@ -29,7 +29,7 @@ const Dashboard = ({ notebooks = [] }) => {
 
 	return (
 		<div id="dashboard">
-			<Notebooks notebooks={notebooksArr} />
+			<Notebooks notebooks={notebooksArr} onNotebookChange={onNotebookChange} />
 			<Notes notebookName={activeNotebookName} notes={notesArr} />
 			<NoteEditor note={activeNote} />
 		</div>
