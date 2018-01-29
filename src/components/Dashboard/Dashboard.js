@@ -25,7 +25,7 @@ const Dashboard = ({ notebooks = [] }) => {
 
 	const activeNote = notesArr.find(note => {
 		return note.active;
-	})
+	});
 
 	return (
 		<div id="dashboard">
