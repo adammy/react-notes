@@ -19,30 +19,35 @@ class App extends Component {
 				{
 					id: v4(),
 					name: "School",
+					active: true,
 					notes: [
 						{
 							id: v4(),
 							name: "Upcoming Projects",
 							content: "<p>This is some mock data.</p>",
-							datetime_updated: new Date('December 17, 2017 03:24:00')
+							datetime_updated: new Date('January 29, 2018 09:24:00'),
+							active: true
 						},
 						{
 							id: v4(),
 							name: "Class Schedule",
 							content: "<p>My super awesome schedule.</p>",
-							datetime_updated: new Date('January 2, 2018 09:24:00')
+							datetime_updated: new Date('December 10, 2017 03:24:00'),
+							active: false
 						}
 					]
 				},
 				{
 					id: v4(),
 					name: "Work",
+					active: false,
 					notes: [
 						{
 							id: v4(),
 							name: "Work To-Do",
 							content: "<p>This is some mock to-do data.</p>",
-							datetime_updated: new Date('December 29, 2017 04:54:00')
+							datetime_updated: new Date('December 29, 2017 04:54:00'),
+							active: true
 						}
 					]
 				}
@@ -56,7 +61,7 @@ class App extends Component {
 
 		return (
 			<div className="app">
-				<Nav name={user.name.first} />
+				<Nav user={user} />
 				<Dashboard notebooks={notebooks} />
 			</div>
 		);
