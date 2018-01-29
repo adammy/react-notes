@@ -54,6 +54,7 @@ class App extends Component {
 			]
 		}
 		this.notebookChange = this.notebookChange.bind(this);
+		this.noteChange = this.noteChange.bind(this);
 	}
 
 	notebookChange(id) {
@@ -69,15 +70,40 @@ class App extends Component {
 		this.setState({notebooks});
 	}
 
+	noteChange(id) {
+		const notes = this.state.notebooks.find(notebook => notebook.active).notes.map(note => {
+			return (note.id !== id) ? {
+				...note,
+				active: false
+			} : {
+				...note,
+				active: true
+			}
+		});
+		const notebooks = this.state.notebooks.map(notebook => {
+			if (notebook.active) {
+				return {
+					...notebook,
+					notes: notes
+				}
+			} else {
+				return {
+					...notebook
+				}
+			}
+		});
+		this.setState({notebooks});
+	}
+
 	render() {
 
-		const { notebookChange } = this;
+		const { notebookChange, noteChange } = this;
 		const { user, notebooks } = this.state;
 
 		return (
 			<div className="app">
 				<Nav user={user} />
-				<Dashboard notebooks={notebooks} onNotebookChange={notebookChange} />
+				<Dashboard notebooks={notebooks} onNotebookChange={notebookChange} onNoteChange={noteChange} />
 			</div>
 		);
 
