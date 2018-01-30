@@ -39,7 +39,7 @@ class App extends Component {
 							id: v4(),
 							name: "Class Schedule",
 							content: "<p><strong>Monday</strong></p><p>10am–12pm / Programming / Room COP 1203</p><p><strong>Tuesday</strong></p><p>1pm–3:15pm / User-Centered Design / Room VAB 205</p><p><strong>Friday</strong></p><p>10am–12pm / Programming / Room COP 1203</p>",
-							datetime_updated: new Date('January 10, 2018 08:24:00'),
+							datetime_updated: new Date('December 29, 2017 08:54:00'),
 							active: false
 						}
 					]
@@ -52,8 +52,8 @@ class App extends Component {
 						{
 							id: v4(),
 							name: "Work To-Do",
-							content: "<p>This is some mock to-do data.</p>",
-							datetime_updated: new Date('December 29, 2017 04:54:00'),
+							content: "<p><strong>Sales & Marketing</strong></p><ul><li>Design and develop e-mails and corresponding landing pages for lead generation.</li><li>Social media marketing</li></ul><p><strong>Human Resources</strong></p><ul><li>Design and develop internal e-mail template</li><li>Find a photo for LinkedIn ad</li></ul>",
+							datetime_updated: new Date('January 26, 2018 09:32:20'),
 							active: true
 						}
 					]
