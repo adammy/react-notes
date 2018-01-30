@@ -10,15 +10,8 @@ class NoteEditor extends Component {
 
 		super(props);
 
-		const html = this.props.note.content;
-		const blocksFromHtml = convertFromHTML(html);
-		const content = ContentState.createFromBlockArray(
-			blocksFromHtml.contentBlocks,
-			blocksFromHtml.entityMap
-		);
-
 		this.state = {
-			editorState: EditorState.createWithContent(content)
+			editorState: EditorState.createWithContent(this.convertHTMLToEditorState(this.props.note.content))
 		}
 
 		this.onChange = (editorState) => this.setState({editorState});
@@ -29,6 +22,21 @@ class NoteEditor extends Component {
 	static propTypes = {
 		note: PropTypes.object
 	};
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			editorState: EditorState.createWithContent(this.convertHTMLToEditorState(nextProps.note.content))
+		})
+	}
+
+	convertHTMLToEditorState(html) {
+		const blocksFromHtml = convertFromHTML(html);
+		const content = ContentState.createFromBlockArray(
+			blocksFromHtml.contentBlocks,
+			blocksFromHtml.entityMap
+		);
+		return content;
+	}
 
 	handleKeyCommand(command, editorState) {
 		const newState = RichUtils.handleKeyCommand(editorState, command);
