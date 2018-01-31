@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { v4 } from 'uuid';
 import Nav from './components/Nav/Nav';
 import Dashboard from './components/Dashboard/Dashboard';
+import Modal from 'react-responsive-modal';
 import './App.css';
 
 class App extends Component {
@@ -9,6 +10,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			open: true,
 			user: {
 				name: {
 					first: "Adam",
@@ -64,6 +66,14 @@ class App extends Component {
 		this.noteChange = this.noteChange.bind(this);
 	}
 
+	onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
+
 	notebookChange(id) {
 		const notebooks = this.state.notebooks.map(notebook => {
 			return (notebook.id !== id) ? {
@@ -105,10 +115,14 @@ class App extends Component {
 	render() {
 
 		const { notebookChange, noteChange } = this;
-		const { user, notebooks } = this.state;
+		const { user, notebooks, open } = this.state;
 
 		return (
 			<div className="app">
+				<Modal open={open} onClose={this.onCloseModal} little>
+          <h1>Work in Progress</h1>
+					<p>Hi there! This React project is a work in progress, so not all of the potential features exist yet. This is more like a minimum viable product (MVP) at this point in its development. Just a friendly heads up.</p>
+        </Modal>
 				<Nav user={user} />
 				<Dashboard notebooks={notebooks} onNotebookChange={notebookChange} onNoteChange={noteChange} />
 			</div>
