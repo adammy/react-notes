@@ -26,7 +26,7 @@ class NoteEditor extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			editorState: EditorState.createWithContent(this.convertHTMLToEditorState(nextProps.note.content))
-		})
+		});
 	}
 
 	convertHTMLToEditorState(html) {
