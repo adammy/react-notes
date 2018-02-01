@@ -24,7 +24,8 @@ const Notes = ({ notebookName, notes = [], onNoteChange = (f => f) }) => {
 
 Notes.propTypes = {
 	notebookName: PropTypes.string,
-	notes: PropTypes.arrayOf(PropTypes.object)
+	notes: PropTypes.arrayOf(PropTypes.object),
+	onNoteChange: PropTypes.func
 };
 
 export default Notes;

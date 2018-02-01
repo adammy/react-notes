@@ -20,7 +20,8 @@ const Notebooks = ({ notebooks = [], onNotebookChange = (f => f) }) => {
 };
 
 Notebooks.propTypes = {
-	notebooks: PropTypes.arrayOf(PropTypes.object)
+	notebooks: PropTypes.arrayOf(PropTypes.object),
+	onNotebookChange: PropTypes.func
 };
 
 export default Notebooks;
