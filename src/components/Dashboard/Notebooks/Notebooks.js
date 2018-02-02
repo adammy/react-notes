@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/fontawesome-free-solid';
 import './Notebooks.css';
 
 const Notebooks = ({ notebooks = [], onNotebookChange = (f => f) }) => {
@@ -11,6 +13,10 @@ const Notebooks = ({ notebooks = [], onNotebookChange = (f => f) }) => {
 				{notebooks.map(notebook =>
 					<div className={notebook.active ? 'item active' : 'item'} key={notebook.id} onClick={() => onNotebookChange(notebook.id)}>
 						<div className="title">{notebook.name}</div>
+						<div className="actions">
+							<FontAwesomeIcon icon={faEdit} />
+							<FontAwesomeIcon icon={faTrash} />
+						</div>
 					</div>
 				)}
 			</div>

@@ -89,6 +89,10 @@ class App extends Component {
 		this.setState({notebooks});
 	}
 
+	notebookRename(id, name) {
+		console.log(id, name);
+	}
+
 	noteChange(id) {
 		const notes = this.state.notebooks.find(notebook => notebook.active).notes.map(note => {
 			return (note.id !== id) ? {
@@ -146,7 +150,11 @@ class App extends Component {
 		return (
 			<div className="app">
 				<Nav user={user} />
-				<Dashboard notebooks={notebooks} onNotebookChange={notebookChange} onNoteChange={noteChange} onNoteEditorChange={noteEditorChange} />
+				<Dashboard
+					notebooks={notebooks}
+					onNotebookChange={notebookChange}
+					onNoteChange={noteChange}
+					onNoteEditorChange={noteEditorChange} />
 			</div>
 		);
 
