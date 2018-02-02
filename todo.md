@@ -1,0 +1,6 @@
+- Pull real preview text
+- React router
+- Rich text toolbar
+- Utilize localstorage
+- Delete items (notes, notebooks)
+- Add items (notes, notebooks)
