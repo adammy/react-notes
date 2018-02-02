@@ -68,6 +68,8 @@ class App extends Component {
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
 
+	// converts html to an editor state object
+	// needed for our static initial state
 	convertHTMLToEditorState(html) {
 		const blocksFromHtml = convertFromHTML(html);
 		const content = ContentState.createFromBlockArray(
@@ -77,15 +79,22 @@ class App extends Component {
 		return content;
 	}
 
+	// when user selects a notebook
 	notebookChange(id) {
 		const notebooks = Object.assign({}, this.state).notebooks;
+
+		// set current 'active' notebook to active=false
+		// set 'selected' notebook to active=true
 		notebooks.find(notebook => notebook.active).active = false;
 		notebooks.find(notebook => (notebook.id === id)).active = true;
+
 		this.setState({notebooks});
 	}
 
 	notebookRename(id, name) {
 		const notebooks = Object.assign({}, this.state).notebooks;
+
+		// find notebook based on id, change it's name, and sort array into alphabetical order
 		notebooks.find(notebook => (notebook.id === id)).name = name;
 		notebooks.sort((a, b) => {
 			a = a.name.toUpperCase();
@@ -96,22 +105,31 @@ class App extends Component {
 				return 1;
 			}
 		});
+
 		this.setState({notebooks});
 	}
 
 	noteChange(id) {
 		const notebooks = Object.assign({}, this.state).notebooks;
+
+		// set current 'active' note in the current 'active' notebook to active=false
+		// set 'selected' note in the 'active' notebook to active=true
 		notebooks.find(notebook => notebook.active)
 			.notes.find(note => note.active).active = false;
 		notebooks.find(notebook => notebook.active)
 			.notes.find(note => (note.id === id)).active = true;
+
 		this.setState({notebooks});
 	}
 
 	noteEditorChange(id, editorState) {
 		const notebooks = Object.assign({}, this.state).notebooks;
+
+		// find note with selected id that is in the 'active' notebooks
+		// set content to new editorState
 		notebooks.find(notebook => notebook.active)
 			.notes.find(note => (note.id === id)).content = editorState;
+
 		this.setState({notebooks});
 	}
 
