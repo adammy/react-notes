@@ -107,22 +107,17 @@ class App extends Component {
 	}
 
 	render() {
-
-		const { notebookChange, notebookRename, noteChange, noteEditorChange } = this;
-		const { user, notebooks } = this.state;
-
 		return (
 			<div className="app">
-				<Nav user={user} />
+				<Nav user={this.state.user} />
 				<Dashboard
-					notebooks={notebooks}
-					onNotebookChange={notebookChange}
-					onNotebookRename={notebookRename}
-					onNoteChange={noteChange}
-					onNoteEditorChange={noteEditorChange} />
+					notebooks={this.state.notebooks}
+					onNotebookChange={this.notebookChange}
+					onNotebookRename={this.notebookRename}
+					onNoteChange={this.noteChange}
+					onNoteEditorChange={this.noteEditorChange} />
 			</div>
 		);
-
 	}
 
 }
