@@ -22,7 +22,7 @@ const Notebooks = ({ notebooks = [], onNotebookChange = (f => f), onNotebookRena
 						<div className="actions">
 							<FontAwesomeIcon icon={faEdit} onClick={(e) => {
 								e.stopPropagation();
-								onNotebookRename(notebook.id, 'New Name Brah');
+								onNotebookRename(notebook.id, prompt(`Rename ${notebook.name} to:`) || notebook.name);
 							}} />
 							<FontAwesomeIcon icon={faTrash} />
 						</div>
