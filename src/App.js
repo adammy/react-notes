@@ -87,6 +87,15 @@ class App extends Component {
 	notebookRename(id, name) {
 		const notebooks = Object.assign({}, this.state).notebooks;
 		notebooks.find(notebook => (notebook.id === id)).name = name;
+		notebooks.sort((a, b) => {
+			a = a.name.toUpperCase();
+			b = b.name.toUpperCase();
+			if (a < b) {
+				return -1
+			} else {
+				return 1;
+			}
+		});
 		this.setState({notebooks});
 	}
 
