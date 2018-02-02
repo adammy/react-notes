@@ -10,6 +10,7 @@ const Dashboard = ({
 	onNotebookChange = (f => f),
 	onNotebookRename = (f => f),
 	onNoteChange = (f => f),
+	onNoteRename = (f => f),
 	onNoteEditorChange = (f => f) }) => {
 
 	const notebooksArr = notebooks.map(notebook => {
@@ -26,7 +27,7 @@ const Dashboard = ({
 	return (
 		<div id="dashboard">
 			<Notebooks notebooks={notebooksArr} onNotebookChange={onNotebookChange} onNotebookRename={onNotebookRename} />
-			<Notes notebookName={activeNotebookName} notes={notesArr} onNoteChange={onNoteChange} />
+			<Notes notebookName={activeNotebookName} notes={notesArr} onNoteChange={onNoteChange} onNoteRename={onNoteRename} />
 			<NoteEditor note={activeNote} onNoteEditorChange={onNoteEditorChange} />
 		</div>
 	);

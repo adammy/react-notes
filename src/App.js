@@ -65,6 +65,7 @@ class App extends Component {
 		this.notebookChange = this.notebookChange.bind(this);
 		this.notebookRename = this.notebookRename.bind(this);
 		this.noteChange = this.noteChange.bind(this);
+		this.noteRename = this.noteRename.bind(this);
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
 
@@ -121,6 +122,26 @@ class App extends Component {
 		this.setState({notebooks});
 	}
 
+	noteRename(id, name) {
+		const notebooks = Object.assign({}, this.state).notebooks;
+
+		// find notebook that is active, then find note based on id, change it's name and datetime_updated, and sort array into date last updated
+		notebooks.find(notebook => notebook.active)
+			.notes.find(note => (note.id === id)).name = name;
+		notebooks.find(notebook => notebook.active)
+			.notes.find(note => (note.id === id)).datetime_updated = new Date();
+		notebooks.find(notebook => notebook.active)
+			.notes.sort((a, b) => {
+				if (a.datetime_updated < b.datetime_updated) {
+					return 1;
+				} else {
+					return -1;
+				}
+			});
+
+		this.setState({notebooks});
+	}
+
 	noteEditorChange(id, editorState) {
 		const notebooks = Object.assign({}, this.state).notebooks;
 
@@ -141,6 +162,7 @@ class App extends Component {
 					onNotebookChange={this.notebookChange}
 					onNotebookRename={this.notebookRename}
 					onNoteChange={this.noteChange}
+					onNoteRename={this.noteRename}
 					onNoteEditorChange={this.noteEditorChange} />
 			</div>
 		);
