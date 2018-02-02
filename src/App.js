@@ -79,7 +79,6 @@ class App extends Component {
 		return content;
 	}
 
-	// when user selects a notebook
 	notebookChange(id) {
 		const notebooks = Object.assign({}, this.state).notebooks;
 
