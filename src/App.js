@@ -3,6 +3,7 @@ import { v4 } from 'uuid';
 import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import Nav from './components/Nav/Nav';
 import Dashboard from './components/Dashboard/Dashboard';
+import Modal from 'react-responsive-modal';
 import './App.css';
 
 class App extends Component {
@@ -68,6 +69,14 @@ class App extends Component {
 		this.noteRename = this.noteRename.bind(this);
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
+
+	onOpenModal = () => {
+		this.setState({ open: true });
+	};
+
+	onCloseModal = () => {
+		this.setState({ open: false });
+	};
 
 	// converts html to an editor state object
 	// needed for our static initial state
@@ -156,6 +165,10 @@ class App extends Component {
 	render() {
 		return (
 			<div className="app">
+				<Modal open={this.state.open} onClose={this.onCloseModal} little>
+					<h1>Work in Progress</h1>
+					<p>Hi there! This React project is a work in progress, so not all of the potential features exist yet. This is more like a minimum viable product (MVP) at this point in its development. Just a friendly heads up.</p>
+				</Modal>
 				<Nav user={this.state.user} />
 				<Dashboard
 					notebooks={this.state.notebooks}
