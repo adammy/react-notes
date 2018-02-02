@@ -63,6 +63,7 @@ class App extends Component {
 			]
 		}
 		this.notebookChange = this.notebookChange.bind(this);
+		this.notebookRename = this.notebookRename.bind(this);
 		this.noteChange = this.noteChange.bind(this);
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
@@ -77,74 +78,37 @@ class App extends Component {
 	}
 
 	notebookChange(id) {
-		const notebooks = this.state.notebooks.map(notebook => {
-			return (notebook.id !== id) ? {
-				...notebook,
-				active: false
-			} : {
-				...notebook,
-				active: true
-			}
-		});
+		const notebooks = Object.assign({}, this.state).notebooks;
+		notebooks.find(notebook => notebook.active).active = false;
+		notebooks.find(notebook => (notebook.id === id)).active = true;
 		this.setState({notebooks});
 	}
 
 	notebookRename(id, name) {
-		console.log(id, name);
+		const notebooks = Object.assign({}, this.state).notebooks;
+		notebooks.find(notebook => (notebook.id === id)).name = name;
+		this.setState({notebooks});
 	}
 
 	noteChange(id) {
-		const notes = this.state.notebooks.find(notebook => notebook.active).notes.map(note => {
-			return (note.id !== id) ? {
-				...note,
-				active: false
-			} : {
-				...note,
-				active: true
-			}
-		});
-		const notebooks = this.state.notebooks.map(notebook => {
-			if (notebook.active) {
-				return {
-					...notebook,
-					notes: notes
-				}
-			} else {
-				return {
-					...notebook
-				}
-			}
-		});
+		const notebooks = Object.assign({}, this.state).notebooks;
+		notebooks.find(notebook => notebook.active)
+			.notes.find(note => note.active).active = false;
+		notebooks.find(notebook => notebook.active)
+			.notes.find(note => (note.id === id)).active = true;
 		this.setState({notebooks});
 	}
 
 	noteEditorChange(id, editorState) {
-		const notes = this.state.notebooks.find(notebook => notebook.active).notes.map(note => {
-			return (note.id !== id) ? {
-				...note
-			} : {
-				...note,
-				content: editorState
-			}
-		});
-		const notebooks = this.state.notebooks.map(notebook => {
-			if (notebook.active) {
-				return {
-					...notebook,
-					notes: notes
-				}
-			} else {
-				return {
-					...notebook
-				}
-			}
-		});
+		const notebooks = Object.assign({}, this.state).notebooks;
+		notebooks.find(notebook => notebook.active)
+			.notes.find(note => (note.id === id)).content = editorState;
 		this.setState({notebooks});
 	}
 
 	render() {
 
-		const { notebookChange, noteChange, noteEditorChange } = this;
+		const { notebookChange, notebookRename, noteChange, noteEditorChange } = this;
 		const { user, notebooks } = this.state;
 
 		return (
@@ -153,6 +117,7 @@ class App extends Component {
 				<Dashboard
 					notebooks={notebooks}
 					onNotebookChange={notebookChange}
+					onNotebookRename={notebookRename}
 					onNoteChange={noteChange}
 					onNoteEditorChange={noteEditorChange} />
 			</div>
