@@ -9,16 +9,20 @@ const NoteEditor = ({ note, onNoteEditorChange = (f => f) }) => {
 
 	return (
 		<div id="editor" className="panel">
-			<div className="title">{note.name}</div>
-			<div className="content">
-				<Editor
-					editorState={note.content}
-					handleKeyCommand={(command, editorState) => {
-						const newState = RichUtils.handleKeyCommand(editorState, command);
-						return onNoteEditorChange(note.id, newState);
-					}}
-					onChange={(editorState) => onNoteEditorChange(note.id, editorState)} />
-			</div>
+			{note &&
+				<div>
+					<div className="title">{note.name}</div>
+					<div className="content">
+						<Editor
+							editorState={note.content}
+							handleKeyCommand={(command, editorState) => {
+								const newState = RichUtils.handleKeyCommand(editorState, command);
+								return onNoteEditorChange(note.id, newState);
+							}}
+							onChange={(editorState) => onNoteEditorChange(note.id, editorState)} />
+					</div>
+				</div>
+			}
 		</div>
 	);
 

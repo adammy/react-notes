@@ -15,7 +15,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: true,
+			open: false,
 			user: {
 				name: {
 					first: "Adam",
@@ -69,8 +69,10 @@ class App extends Component {
 		}
 		this.notebookChange = this.notebookChange.bind(this);
 		this.notebookRename = this.notebookRename.bind(this);
+		this.notebookAdd = this.notebookAdd.bind(this);
 		this.noteChange = this.noteChange.bind(this);
 		this.noteRename = this.noteRename.bind(this);
+		this.noteAdd = this.noteAdd.bind(this);
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
 
@@ -118,6 +120,30 @@ class App extends Component {
 		this.setState({notebooks});
 	}
 
+	notebookAdd(name) {
+		const notebooks = Object.assign({}, this.state).notebooks;
+
+		// set current 'active' notebook to active=false, add new notebook (active=true), and sort array into alphabetical order
+		notebooks.find(notebook => notebook.active).active = false;
+		notebooks.push({
+			id: v4(),
+			name: name,
+			active: true,
+			notes: []
+		});
+		notebooks.sort((a, b) => {
+			a = a.name.toUpperCase();
+			b = b.name.toUpperCase();
+			if (a < b) {
+				return -1
+			} else {
+				return 1;
+			}
+		});
+
+		this.setState({notebooks});
+	}
+
 	noteChange(id) {
 		const notebooks = Object.assign({}, this.state).notebooks;
 
@@ -151,13 +177,52 @@ class App extends Component {
 		this.setState({notebooks});
 	}
 
+	noteAdd(name) {
+		const notebooks = Object.assign({}, this.state).notebooks;
+
+		// make 'active' note false, find active notebook, push new note into it, reorder notes by datetime_updated
+		try {
+			notebooks.find(notebook => notebook.active)
+				.notes.find(note => note.active).active = false;
+		} catch (err) {};
+		notebooks.find(notebook => notebook.active)
+			.notes.push({
+				id: v4(),
+				name: name,
+				active: true,
+				content: EditorState.createEmpty(),
+				datetime_updated: new Date()
+			});
+		notebooks.find(notebook => notebook.active)
+			.notes.sort((a, b) => {
+				if (a.datetime_updated < b.datetime_updated) {
+					return 1;
+				} else {
+					return -1;
+				}
+			});
+
+		this.setState({notebooks});
+	}
+
 	noteEditorChange(id, editorState) {
 		const notebooks = Object.assign({}, this.state).notebooks;
 
 		// find note with selected id that is in the 'active' notebooks
 		// set content to new editorState
+		// update datetime_updated and sort notes by datetime_updated
 		notebooks.find(notebook => notebook.active)
 			.notes.find(note => (note.id === id)).content = editorState;
+		notebooks.find(notebook => notebook.active)
+			.notes.find(note => (note.id === id)).datetime_updated = new Date();
+		notebooks.find(notebook => notebook.active)
+			.notes.sort((a, b) => {
+				if (a.datetime_updated < b.datetime_updated) {
+					return 1;
+				} else {
+					return -1;
+				}
+			});
 
 		this.setState({notebooks});
 	}
@@ -182,8 +247,8 @@ class App extends Component {
 					<p>Hi there! This React project is a work in progress, so not all of the potential features exist yet. This is more like a minimum viable product (MVP) at this point in its development. Just a friendly heads up.</p>
 				</Modal>
 				<Nav user={this.state.user} />
-				<Notebooks notebooks={notebooksArr} onNotebookChange={this.notebookChange} onNotebookRename={this.notebookRename} />
-				<Notes notebookName={activeNotebookName} notes={notesArr} onNoteChange={this.noteChange} onNoteRename={this.noteRename} />
+				<Notebooks notebooks={notebooksArr} onNotebookChange={this.notebookChange} onNotebookRename={this.notebookRename} onNotebookAdd={this.notebookAdd} />
+				<Notes notebookName={activeNotebookName} notes={notesArr} onNoteChange={this.noteChange} onNoteRename={this.noteRename} onNoteAdd={this.noteAdd} />
 				<NoteEditor note={activeNote} onNoteEditorChange={this.noteEditorChange} />
 			</div>
 		);

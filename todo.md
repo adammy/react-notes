@@ -4,3 +4,9 @@
 - Utilize localstorage
 - Delete items (notes, notebooks)
 - Add items (notes, notebooks)
+- Search
+- Filtering
+- Dynamic title tag (part of routing probably)
+- Refactor logic
+	- Maybe utilize a new Notebook/Note data structure (class) with methods like find(), sort(), unactiveAll() so that these things are repeatedly being done in the React src, but are rather part of their own data structure
+- Utilize custom component vs prompt() and confirm()
