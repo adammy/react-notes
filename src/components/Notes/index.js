@@ -20,7 +20,9 @@ const Notes = ({ notebookName, notes = [], onNoteChange = (f => f), onNoteRename
 
 						<div className="title">{note.name}</div>
 						<div className="updated">{moment(note.datetime_updated).fromNow()}</div>
-						<div className="preview">{note.content.getCurrentContent().getPlainText().replace(/^([\s\S]{80}[^\s]*)[\s\S]*/, '$1')}&hellip;</div>
+						<div className={note.content.getCurrentContent().getPlainText() ? 'preview' : 'preview empty'}>
+							{note.content.getCurrentContent().getPlainText().replace(/^([\s\S]{80}[^\s]*)[\s\S]*/, '$1')}
+						</div>
 
 						<div className="actions">
 							<FontAwesomeIcon icon={faEdit} onClick={(e) => {

@@ -47,6 +47,12 @@
 			font-size: 0.75em;
 			line-height: 1.25em;
 			margin: 0.5em 0;
+			&:after {
+				content: '\2026';
+			}
+			&.empty {
+				display: none;
+			}
 		}
 		&.active {
 			background: $primary;
