@@ -6,11 +6,7 @@ import { faEdit, faTrash } from '@fortawesome/fontawesome-free-solid';
 
 import './style.css';
 
-const Notes = ({
-	notebookName,
-	notes = [],
-	onNoteChange = (f => f),
-	onNoteRename = (f => f) }) => {
+const Notes = ({ notebookName, notes = [], onNoteChange = (f => f), onNoteRename = (f => f) }) => {
 
 	return (
 		<div id="notes" className="panel">
@@ -24,7 +20,7 @@ const Notes = ({
 
 						<div className="title">{note.name}</div>
 						<div className="updated">{moment(note.datetime_updated).fromNow()}</div>
-						<div className="preview">This is some preview text for now cause reasons&hellip;</div>
+						<div className="preview">{note.content.getCurrentContent().getPlainText().replace(/^([\s\S]{85}[^\s]*)[\s\S]*/, '$1')}</div>
 
 						<div className="actions">
 							<FontAwesomeIcon icon={faEdit} onClick={(e) => {
