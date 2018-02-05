@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/fontawesome-free-solid';
-import './Notebooks.css';
+
+import './style.css';
 
 const Notebooks = ({ notebooks = [], onNotebookChange = (f => f), onNotebookRename = (f => f) }) => {
 

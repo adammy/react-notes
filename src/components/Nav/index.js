@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Nav.css';
+
+import './style.css';
 
 const Nav = ({ user }) => {
 

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { v4 } from 'uuid';
 import { EditorState, ContentState, convertFromHTML } from 'draft-js';
-import Nav from './components/Nav/Nav';
-import Dashboard from './components/Dashboard/Dashboard';
-import Modal from 'react-responsive-modal';
+import Modal from 'react-responsive-modal'; // temporary
+
+import Nav from './components/Nav';
+import Notebooks from './components/Notebooks';
+import Notes from './components/Notes';
+import NoteEditor from './components/NoteEditor';
+
 import './App.css';
 
 class App extends Component {
@@ -70,13 +74,9 @@ class App extends Component {
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
 
-	onOpenModal = () => {
-		this.setState({ open: true });
-	};
-
-	onCloseModal = () => {
-		this.setState({ open: false });
-	};
+	// modal methods; temporary
+	onOpenModal = () => this.setState({ open: true });
+	onCloseModal = () => this.setState({ open: false });
 
 	// converts html to an editor state object
 	// needed for our static initial state
@@ -163,6 +163,18 @@ class App extends Component {
 	}
 
 	render() {
+
+		const notebooksArr = this.state.notebooks.map(notebook => {
+			return {
+				id: notebook.id,
+				name: notebook.name,
+				active: notebook.active
+			};
+		});
+		const activeNotebookName = this.state.notebooks.find(notebook => notebook.active).name;
+		const notesArr = this.state.notebooks.find(notebook => notebook.active).notes;
+		const activeNote = notesArr.find(note => note.active);
+
 		return (
 			<div className="app">
 				<Modal open={this.state.open} onClose={this.onCloseModal} little>
@@ -170,15 +182,12 @@ class App extends Component {
 					<p>Hi there! This React project is a work in progress, so not all of the potential features exist yet. This is more like a minimum viable product (MVP) at this point in its development. Just a friendly heads up.</p>
 				</Modal>
 				<Nav user={this.state.user} />
-				<Dashboard
-					notebooks={this.state.notebooks}
-					onNotebookChange={this.notebookChange}
-					onNotebookRename={this.notebookRename}
-					onNoteChange={this.noteChange}
-					onNoteRename={this.noteRename}
-					onNoteEditorChange={this.noteEditorChange} />
+				<Notebooks notebooks={notebooksArr} onNotebookChange={this.notebookChange} onNotebookRename={this.notebookRename} />
+				<Notes notebookName={activeNotebookName} notes={notesArr} onNoteChange={this.noteChange} onNoteRename={this.noteRename} />
+				<NoteEditor note={activeNote} onNoteEditorChange={this.noteEditorChange} />
 			</div>
 		);
+
 	}
 
 }

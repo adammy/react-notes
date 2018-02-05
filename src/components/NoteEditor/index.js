@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Editor, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import './NoteEditor.css';
+
+import './style.css';
 
 const NoteEditor = ({ note, onNoteEditorChange = (f => f) }) => {
 
