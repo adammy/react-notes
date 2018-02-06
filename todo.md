@@ -5,3 +5,4 @@
 - Filtering
 - Dynamic title tag (part of routing probably)
 - Utilize custom component vs prompt() and confirm()
+- Export to PDF (Use puppeteer)
