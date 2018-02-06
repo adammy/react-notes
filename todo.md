@@ -1,8 +1,6 @@
-- Pull real preview text
 - React router
 - Rich text toolbar
 - Utilize localstorage
-- Delete items (notes, notebooks)
 - Search
 - Filtering
 - Dynamic title tag (part of routing probably)
