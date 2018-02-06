@@ -5,11 +5,11 @@ import { faEdit, faTrash, faPlusCircle } from '@fortawesome/fontawesome-free-sol
 
 import './style.css';
 
-const Notebooks = ({ notebooks = [], onNotebookChange = (f => f), onNotebookRename = (f => f), onNotebookAdd = (f => f) }) => {
+const Notebooks = ({ notebooks = [], onNotebookChange = (f => f), onNotebookRename = (f => f), onNotebookAdd = (f => f), onNotebookDelete = (f => f) }) => {
 
 	return (
 		<div id="notebooks" className="panel">
-			<h2>Notebooks</h2>
+			<h2>Notebooks ({notebooks.length})</h2>
 			<div className="selections">
 				{notebooks.map(notebook =>
 					<div className={notebook.active ? 'item active' : 'item'} key={notebook.id} onClick={() => onNotebookChange(notebook.id)}>
@@ -19,7 +19,10 @@ const Notebooks = ({ notebooks = [], onNotebookChange = (f => f), onNotebookRena
 								e.stopPropagation();
 								onNotebookRename(notebook.id, prompt(`Rename ${notebook.name} to:`) || notebook.name);
 							}} />
-							<FontAwesomeIcon icon={faTrash} />
+							<FontAwesomeIcon icon={faTrash} onClick={e => {
+								e.stopPropagation();
+								return window.confirm(`Are you sure you want to delete the ${notebook.name} notebook?`) ? onNotebookDelete(notebook.id) : null;
+							}} />
 						</div>
 					</div>
 				)}
@@ -35,7 +38,8 @@ const Notebooks = ({ notebooks = [], onNotebookChange = (f => f), onNotebookRena
 Notebooks.propTypes = {
 	notebooks: PropTypes.arrayOf(PropTypes.object),
 	onNotebookChange: PropTypes.func,
-	onNotebookAdd: PropTypes.func
+	onNotebookAdd: PropTypes.func,
+	onNotebookDelete: PropTypes.func
 };
 
 export default Notebooks;

@@ -24,12 +24,9 @@ class Notebook {
 	}
 
 	getNotes(sortBy = 'datetime_updated') {
-
 		switch (sortBy) {
-
 			case 'name':
 				return this.notes.sort((a, b) => (a.name.toUpperCase() < b.name.toUpperCase()) ? -1 : 1);
-
 			case 'datetime_updated':
 				return this.notes.sort((a, b) => {
 					if (a.datetime_updated < b.datetime_updated) {
@@ -38,12 +35,9 @@ class Notebook {
 						return -1;
 					}
 				});
-
 			default:
 				break;
-
 		}
-
 		return this.notes;
 	}
 
@@ -53,6 +47,16 @@ class Notebook {
 
 	getNoteByName(name) {
 		return this.notes.find(note => note.name === name);
+	}
+
+	deleteNoteByID(id) {
+		this.notes = this.notes.filter(note => note.id !== id);
+		return this;
+	}
+
+	deleteNoteByName(name) {
+		this.notes = this.notes.filter(note => note.name !== name);
+		return this;
 	}
 
 	getActiveNote() {
@@ -67,6 +71,14 @@ class Notebook {
 
 	setAllNotesToInactive() {
 		this.notes.map(note => note.setToInactive());
+		return this;
+	}
+
+	setFirstNoteToActive() {
+		if (this.notes.length) {
+			this.notes[0].setToActive();
+		}
+		return this;
 	}
 
 	getActive() {

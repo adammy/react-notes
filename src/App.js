@@ -27,9 +27,11 @@ class App extends Component {
 		this.notebookChange = this.notebookChange.bind(this);
 		this.notebookRename = this.notebookRename.bind(this);
 		this.notebookAdd = this.notebookAdd.bind(this);
+		this.notebookDelete = this.notebookDelete.bind(this);
 		this.noteChange = this.noteChange.bind(this);
 		this.noteRename = this.noteRename.bind(this);
 		this.noteAdd = this.noteAdd.bind(this);
+		this.noteDelete = this.noteDelete.bind(this);
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
 
@@ -39,8 +41,7 @@ class App extends Component {
 
 	notebookChange(id) {
 		const notebooks = Object.assign({}, this.state).notebooks;
-		notebooks.setAllNotebooksToInactive();
-		notebooks.getNotebookByID(id).setToActive();
+		notebooks.setAllNotebooksToInactive().getNotebookByID(id).setToActive();
 		this.setState({notebooks});
 	}
 
@@ -53,8 +54,17 @@ class App extends Component {
 
 	notebookAdd(name) {
 		const notebooks = Object.assign({}, this.state).notebooks;
-		notebooks.setAllNotebooksToInactive();
-		notebooks.addNotebook(name).getNotebooks();
+		notebooks.setAllNotebooksToInactive().addNotebook(name).getNotebooks();
+		this.setState({notebooks});
+	}
+
+	notebookDelete(id) {
+		const notebooks = Object.assign({}, this.state).notebooks;
+		if (notebooks.getNotebookByID(id).getActive()) {
+			notebooks.deleteNotebookByID(id).setAllNotebooksToInactive().setFirstNotebookToActive();
+		} else {
+			notebooks.deleteNotebookByID(id);
+		}
 		this.setState({notebooks});
 	}
 
@@ -79,6 +89,16 @@ class App extends Component {
 		this.setState({notebooks});
 	}
 
+	noteDelete(id) {
+		const notebooks = Object.assign({}, this.state).notebooks;
+		if (notebooks.getActiveNotebook().getNoteByID(id).getActive()) {
+			notebooks.getActiveNotebook().deleteNoteByID(id).setAllNotesToInactive().setFirstNoteToActive();
+		} else {
+			notebooks.getActiveNotebook().deleteNoteByID(id);
+		}
+		this.setState({notebooks});
+	}
+
 	noteEditorChange(id, editorState) {
 		const notebooks = Object.assign({}, this.state).notebooks;
 		notebooks.getActiveNotebook().getNoteByID(id).setContent(editorState).setDateTimeToNow();
@@ -97,8 +117,8 @@ class App extends Component {
 					<p>Hi there! This React project is a work in progress, so not all of the potential features exist yet. This is more like a minimum viable product (MVP) at this point in its development. Just a friendly heads up.</p>
 				</Modal>
 				<Nav user={this.state.user} />
-				<Notebooks notebooks={notebooks.getNotebooks()} onNotebookChange={this.notebookChange} onNotebookRename={this.notebookRename} onNotebookAdd={this.notebookAdd} />
-				<Notes notebookName={notebooks.getActiveNotebook().getName()} notes={notebooks.getActiveNotebook().getNotes()} onNoteChange={this.noteChange} onNoteRename={this.noteRename} onNoteAdd={this.noteAdd} />
+				<Notebooks notebooks={notebooks.getNotebooks()} onNotebookChange={this.notebookChange} onNotebookRename={this.notebookRename} onNotebookAdd={this.notebookAdd} onNotebookDelete={this.notebookDelete} />
+				<Notes notebook={notebooks.getActiveNotebook()} onNoteChange={this.noteChange} onNoteRename={this.noteRename} onNoteAdd={this.noteAdd} onNoteDelete={this.noteDelete} />
 				<NoteEditor note={notebooks.getActiveNotebook().getActiveNote()} onNoteEditorChange={this.noteEditorChange} />
 			</div>
 		);
