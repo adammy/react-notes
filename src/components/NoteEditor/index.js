@@ -1,36 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Editor, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
 
 import './style.css';
 
-const NoteEditor = ({ note, onNoteEditorChange = (f => f) }) => {
+class NoteEditor extends Component {
 
-	return (
-		<div id="editor" className="panel">
-			{note &&
-				<div>
-					<div className="title">{note.name}</div>
-					<div className="content">
-						<Editor
-							editorState={note.content}
-							handleKeyCommand={(command, editorState) => {
-								const newState = RichUtils.handleKeyCommand(editorState, command);
-								return onNoteEditorChange(note.id, newState);
-							}}
-							onChange={(editorState) => onNoteEditorChange(note.id, editorState)} />
+	constructor(props) {
+		super(props);
+		this.onChange = editorState => this.props.onNoteEditorChange(this.props.note.getID(), editorState);
+	}
+
+	static propTypes = {
+		note: PropTypes.object,
+		onNoteEditorChange: PropTypes.func
+	};
+
+	handleKeyCommand(command, editorState) {
+		return this.onChange(RichUtils.handleKeyCommand(editorState, command));
+	}
+
+	_onBoldClick() {
+		this.onChange(RichUtils.toggleInlineStyle(this.props.note.getContent(), 'BOLD'));
+	}
+
+	render() {
+
+		return (
+			<div id="editor" className="panel">
+				{this.props.note &&
+					<div>
+						<div className="title">{this.props.note.name}</div>
+						<div className="content">
+							<button onClick={this._onBoldClick.bind(this)}>Bold</button>
+							<Editor
+								editorState={this.props.note.getContent()}
+								handleKeyCommand={this.handleKeyCommand}
+								onChange={this.onChange} />
+						</div>
 					</div>
-				</div>
-			}
-		</div>
-	);
+				}
+			</div>
+		);
 
-};
+	}
 
-NoteEditor.propTypes = {
-	note: PropTypes.object,
-	onNoteEditorChange: PropTypes.func
-};
+}
 
 export default NoteEditor;
