@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Modal from 'react-responsive-modal'; // temporary
 
 import NotebooksData from './data/InitialState';
 
@@ -15,7 +14,6 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: false,
 			user: {
 				name: {
 					first: "Adam",
@@ -112,10 +110,6 @@ class App extends Component {
 
 		return (
 			<div className="app">
-				<Modal open={this.state.open} onClose={this.onCloseModal} little>
-					<h1>Work in Progress</h1>
-					<p>Hi there! This React project is a work in progress, so not all of the potential features exist yet. This is more like a minimum viable product (MVP) at this point in its development. Just a friendly heads up.</p>
-				</Modal>
 				<Nav user={this.state.user} />
 				<Notebooks notebooks={notebooks.getNotebooks()} onNotebookChange={this.notebookChange} onNotebookRename={this.notebookRename} onNotebookAdd={this.notebookAdd} onNotebookDelete={this.notebookDelete} />
 				<Notes notebook={notebooks.getActiveNotebook()} onNoteChange={this.noteChange} onNoteRename={this.noteRename} onNoteAdd={this.noteAdd} onNoteDelete={this.noteDelete} />

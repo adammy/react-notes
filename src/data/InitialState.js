@@ -1,4 +1,4 @@
-import NotebookList from '../structures/NotebookList';
+import NotebookList from '../models/NotebookList';
 
 const NotebooksData = new NotebookList();
 
