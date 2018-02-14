@@ -33,10 +33,6 @@ class App extends Component {
 		this.noteEditorChange = this.noteEditorChange.bind(this);
 	}
 
-	// modal methods; temporary
-	onOpenModal = () => this.setState({ open: true });
-	onCloseModal = () => this.setState({ open: false });
-
 	notebookChange(id) {
 		const notebooks = Object.assign({}, this.state).notebooks;
 		notebooks.setAllNotebooksToInactive().getNotebookByID(id).setToActive();
